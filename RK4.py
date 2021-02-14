@@ -15,21 +15,34 @@ def calc_exact():
 
     plt.scatter(t, y)
 
-def eulers(f, t0, y0, N, h):
+def RK4(f, t0, y0, N, h):
     i = 0
     ti = t0
     yi = y0
+
+    S1 = -1
+    S2 = -1
+    S3 = -1
+    S4 = -1
     yi_1 = -1
 
     t = [ti]
     y = [yi]
 
     while(i < N):
-        yi_1 = yi + (h * f(ti, yi))
+        S1 = f(ti, yi)
+        S2 = f(ti + h/2, yi + ((h/2) * S1))
+        S3 = f(ti + h/2, yi + ((h/2) * S2))
+
+        ti_1 = ti + h
+        S4 = f(ti, yi + (h * S3))
+
+        yi_1 = yi + h * (((1/6) * S1) + ((1/3) * S2) + ((1/3) * S3) + ((1/6) * S4))
+
+        ti = ti_1
         yi = yi_1
-        ti += h
         i += 1
-        
+
         t.append(ti)
         y.append(yi)
     
@@ -41,6 +54,6 @@ def f(t, y):
     return((-20 * y) + (20 * math.sin(t)) + math.cos(t))
 
 calc_exact()
-eulers(f, 0, 1, 20, .1)
+RK4(f, 0, 1, 20, .1)
 
 plt.show()

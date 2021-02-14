@@ -15,21 +15,30 @@ def calc_exact():
 
     plt.scatter(t, y)
 
-def eulers(f, t0, y0, N, h):
+# trapozoidal specifically for problem 1 on HW4
+def trapezoidal(f, t0, y0, N, h):
     i = 0
     ti = t0
     yi = y0
+
     yi_1 = -1
 
     t = [ti]
     y = [yi]
 
     while(i < N):
-        yi_1 = yi + (h * f(ti, yi))
+        ti_1 = ti + h
+
+        firstTerm = ((1 - (10 * h)) / (1 + (10 * h))) * yi
+        secondTerm = ((10 * h) / (1 + (10 * h))) * (math.sin(ti) + math.sin(ti_1))
+        thirdTerm = (h / (2 * (1 + (10 * h)))) * (math.cos(ti) + math.cos(ti_1))
+
+        yi_1 = firstTerm + secondTerm + thirdTerm
+
+        ti = ti_1
         yi = yi_1
-        ti += h
         i += 1
-        
+
         t.append(ti)
         y.append(yi)
     
@@ -41,6 +50,6 @@ def f(t, y):
     return((-20 * y) + (20 * math.sin(t)) + math.cos(t))
 
 calc_exact()
-eulers(f, 0, 1, 20, .1)
+trapezoidal(f, 0, 1, 20, .1)
 
 plt.show()
