@@ -91,12 +91,15 @@ def l_inf(v):
 
 y_exact_02 = calc_exact(0.2, 10)
 y_02 = finiteDifference(-2, 1, f, 0, 0, -4, 0.2, 10)
+print(y_02)
 
 y_exact_01= calc_exact(0.1, 20)
 y_01 = finiteDifference(-2, 1, f, 0, 0, -4, 0.1, 20)
+print(y_01)
 
 y_exact_005 = calc_exact(0.05, 40)
 y_005 = finiteDifference(-2, 1, f, 0, 0, -4, 0.05, 40)
+print(y_005)
 
 e_02 = y_exact_02 - y_02
 e_02 = list(e_02)
